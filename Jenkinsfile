@@ -26,4 +26,7 @@ node{
         sh "docker push tawfiq15/xxx:${BUILD_NUMBER}"
         
     }
+    stage ('Delete images on server'){
+    sh "docker rmi -f $(docker images -a -q)"
+    }
 }
