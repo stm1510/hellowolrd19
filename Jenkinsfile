@@ -1,50 +1,29 @@
-pipeline {
-    agent any
-    triggers {
-        cron('H */1 * * * ')
-     }
-    tools {
-        maven 'maven'
-      
+node{
+    def maven_Home=tool  name:'maven'
+    stage ('Pull from Github'){
+        git branch: 'main', credentialsId: 'githubID', url: 'https://github.com/stm1510/Helloword20.git'
     }
-    stages {
-      stage('Build'){
-        steps {
-          echo "Build step"
-          sh 'mvn clean'
-          sh 'mvn install'
-          sh 'mvn package'
-         
-        }
-      }
-      
-      }
-        stage('test '){
-        steps {
-            retry(4){
-          echo  "test step"
-            }
-          sh 'mvn test'
-        }
-      
-      
-      }
-        
     
+    stage ('Build'){
+        sh " '${maven_Home}/bin/mvn' clean install package"
     }
-    post {
-        always {
-            echo "Always display this message "
-        }
-        failure {
-            echo "Job failed "
-        }
-        success {
-            echo "Successful run "
-        }
-        unstable {
-            echo "The job is unstable "
-        }
-    } 
 
+    stage ('Docker Build'){
+        sh " docker build -t tawfiq15/xxx:${BUILD_NUMBER} . "
+        sh " docker images "
+    }
+
+    stage ('Docker Login'){
+        withCredentials([string(credentialsId: 'dockerpass', variable: 'dockerpass')]) {
+    // some block
+        sh "docker login -u tawfiq15 -p ${dockerpass}"
+            
+        }
+        
+    }
+
+    stage ( 'Docker push'){
+        sh "docker push tawfiq15/xxx:${BUILD_NUMBER}"
+        
+    }
 }
