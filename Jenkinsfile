@@ -28,6 +28,6 @@ node{
         
     }
     stage ('Delete images on server'){
-    sh "docker rmi -f $(docker images -a -q)"
+//    sh "docker rmi -f $(docker images -a -q)"
     }
 }
