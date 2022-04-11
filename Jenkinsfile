@@ -9,6 +9,10 @@ node{
         sh " '${maven_Home}/bin/mvn' clean install package"
     }
 
+     stage ('Deploy to Container'){
+        deploy adapters: [tomcat8(credentialsId: 'TOMCAT', path: '', url: 'http://52.90.127.229:8080/')], contextPath: null, war: '**/*.war'
+     }
+    
     stage ('Docker Build'){
         sh " docker build -t tawfiq15/xxx:${BUILD_NUMBER} . "
         sh " docker images "
