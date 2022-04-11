@@ -27,5 +27,11 @@ node{
         sh "docker push tawfiq15/xxx:${BUILD_NUMBER}"
         
     }
+    stage ('Docker image Remove'){
+        sh "docker rmi -f $(docker images -q)"
+    }
+    stage ("Deploy to Kubernetes"){
+    sh " kubectl apply -f deployment.yml"
+    }
 
 }
