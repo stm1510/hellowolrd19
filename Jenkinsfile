@@ -9,7 +9,7 @@ node{
         sh " '${maven_Home}/bin/mvn' clean install package"
     }
 
-     stage ('Deploy to Container'){
+    // stage ('Deploy to Container'){
         deploy adapters: [tomcat8(credentialsId: 'TOMCAT', path: '', url: 'http://52.90.127.229:8080/')], contextPath: null, war: '**/*.war'
      }
     
@@ -27,12 +27,12 @@ node{
         
     }
 
-    stage ( 'Docker push'){
-        sh "docker push tawfiq15/xxx:${BUILD_NUMBER}"
+    //stage ( 'Docker push'){
+      //  sh "docker push tawfiq15/xxx:${BUILD_NUMBER}"
         
     }
-    stage ('Docker image Remove'){
-        sh "docker rmi -f $(docker images -q)"
+   // stage ('Docker image Remove'){
+     //   sh "docker rmi -f $(docker images -q)"
     }
     stage ("Deploy to Kubernetes"){
     sh " kubectl apply -f deployment.yml"
