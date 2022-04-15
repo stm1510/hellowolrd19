@@ -1,0 +1,8 @@
+access key id = AKIAV2R4MDOLONT4RZ7E
+
+username = jenkins 
+
+secret access key = lqpL84K6D0d5C1JfmlxJYQ5tV8MHB82PnNonX6uX
+
+
+console login link = https://400632322966.signin.aws.amazon.com/console
