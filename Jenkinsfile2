@@ -1,1 +1,40 @@
+node{
+    
+    def maven_home=tool name:'maven'
+    
+    stage ('Pull from Github'){
+        git credentialsId: 'githubID', url: 'https://github.com/stm1510/hellowolrd19.git'
+    }
 
+    stage ('Maven Build'){
+        sh "'${maven_home}/bin/mvn' clean install package"
+    }
+
+    stage ('Deploy to Tomcat'){
+        deploy adapters: [tomcat8(credentialsId: 'container', path: '', url: 'http://192.168.0.122:8088/')], contextPath: null, war: '**/*.war'
+    }
+
+    
+        
+
+    stage ('Send Artifact to Remote server'){
+        sshPublisher(publishers: [sshPublisherDesc(configName: 'ssh remote machine', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*/')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+    }
+
+    stage ('Docker Build'){
+        sh " docker build -t tawfiq15/alpine:${BUILD_NUMBER} ."
+    }
+
+    stage ('Docker Login'){
+       sh "cat /var/lib/jenkins/docker.json > /var/lib/jenkins/.docker/config.json"
+    }
+    
+
+    stage ('Docker Login'){
+        sh "docker login"
+    }
+
+    stage ('Docker Push'){
+        sh "docker push tawfiq15/alpine:${BUILD_NUMBER}"
+    }
+}
