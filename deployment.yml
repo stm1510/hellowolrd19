@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: tawfiq15
-        image: tawfiq15/tomcat:latest
+        image: selimhorri/employee-simple-management
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
