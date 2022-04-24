@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tawfiq15-service
+  labels:
+    app: tawfiq15
+spec:
+  selector:
+    app: tawfiq15
+
+  ports:
+    - port: 8080
+      targetPort: 8080
