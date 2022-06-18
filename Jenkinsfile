@@ -14,7 +14,7 @@ node{
      }
     
     stage ('Docker Build'){
-        sh " docker build -t tawfiq15/xxx:${BUILD_NUMBER} . "
+        sh " docker build -t tawfiq15/aws:${BUILD_NUMBER} . "
         sh " docker images "
     }
 

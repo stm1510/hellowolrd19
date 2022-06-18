@@ -1,0 +1,15 @@
+[
+	{
+		"ParameterKey": "EnvironmentName",
+		"ParameterValue": "Tawfiq-udacityProject"
+	},
+    {  
+		"ParameterKey": "AMImage",
+		"ParameterValue": "ami-09d56f8956ab235b3"
+	},
+	{
+		"ParameterKey" :"KeyName",
+		"ParameterValue" : "tawfiq-udacity-key"
+	}
+    	
+]
