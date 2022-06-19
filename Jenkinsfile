@@ -5,7 +5,7 @@ node{
         git credentialsId: 'githubID', url: 'https://github.com/stm1510/hellowolrd19.git'
     }
     
-    stage ('Build'){
+   // stage ('Build'){
         sh " '${maven_Home}/bin/mvn' clean install package"
     }
 
