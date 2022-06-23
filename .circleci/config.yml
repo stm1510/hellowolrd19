@@ -6,12 +6,12 @@ jobs:
       - image: tawfiq15/centos_ssh
     steps:
       - checkout
-      - run: yum -y install maven -y
+      - run: yum install maven -y 
       - save_cache:
           key: "maven-packages"
           paths:
             - /src/node_modules
-      - run: maven build 
+      - run: maven --version
   test:
     docker:
       - image: circleci/node:13.8.0
@@ -19,10 +19,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - "maven-packages"
-      - run: maven --version
+            - "npm-packages"
+      - run: npm i
+      - run: npm run test
+      - run : npm audit fix --force 
+      - run : npm fund    
        
-
+  
 
 workflows:
   my_workflow:
