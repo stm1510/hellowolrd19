@@ -50,7 +50,7 @@ jobs:
             mvn clean install package 
   echo:
     docker:
-        - image: tawfiq15/python3-app
+      - image: tawfiq15/python3-app
     steps: 
     #  - checkout
       - run :
