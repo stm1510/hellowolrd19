@@ -48,5 +48,18 @@ jobs:
           name: maven job
           command: |
             mvn clean install package 
+  echo:
+    docker:
+        -image: tawfiq15/python3-app
+        -run :
+          name: Test App
+          command : |
+              python3 app.py 
+              echo $? 
+
+
 workflow:
-  build
+  jobs: 
+    - build
+    - echo :
+      requires: [build]
