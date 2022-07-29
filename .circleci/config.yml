@@ -57,7 +57,9 @@ jobs:
           name: Test App
           command : |
               python3 app.py 
-              echo $? 
+              echo $?
+    persist_to_workspace:
+       
 
 
 workflow:
