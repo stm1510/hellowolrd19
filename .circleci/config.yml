@@ -59,7 +59,7 @@ jobs:
 
 
 workflow:
-  jobs: 
+  jobs:
     - build
     - echo :
       requires: [build]
