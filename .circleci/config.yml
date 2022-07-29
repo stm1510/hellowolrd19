@@ -47,6 +47,6 @@ jobs:
       - run: 
           name: maven job
           command: |
-            maven clean install package 
+            mvn clean install package 
 workflow:
   build
