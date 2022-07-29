@@ -54,7 +54,7 @@ jobs:
     steps: 
       - checkout
       - run :
-          name: Test App
+          name: Test Python App
           command : |
               python3 app.py 
               echo $?
