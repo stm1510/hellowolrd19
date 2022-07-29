@@ -44,8 +44,9 @@ jobs:
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
       # run tests!
-      - run: maven job
-      - command: |
+      - run: 
+          name: maven job
+          command: |
             maven clean install package 
 workflow:
   build
