@@ -1,51 +1,37 @@
-# Java Gradle CircleCI 2.0 configuration file
-# See: https://circleci.com/docs/2.0/language-java/
-version: 2
+version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
   build:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8-jdk
-       
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
-
-    environment:
-      # Customize the JVM maximum heap limit
-      JVM_OPTS: -Xmx3200m
-      TERM: dumb
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: openjdk:19-nanoserver
     steps:
       - checkout
-
-      # Download and cache dependencies
+      - run: yum install maven -y 
+      - save_cache:
+          key: "maven-packages"
+          paths:
+            - /src/node_modules
+      - run: maven --version
+  test:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - "npm-packages"
+      - run: npm i
+      - run: npm run test
+      - run : npm audit fix --force 
+      - run : npm fund    
+       
+  
 
-      - run: gradle dependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-
-      # run tests!
-      - run: maven job
-      - command: |
-            maven clean install package 
-workflow:
-  build
+workflows:
+  my_workflow:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      
