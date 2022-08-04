@@ -52,7 +52,7 @@ jobs:
     docker:
         - image: tawfiq15/centos_httpd
     steps: 
-    #  - checkout
+      - checkout
       - run :
           name: Test Python App
           command : |
@@ -64,6 +64,6 @@ jobs:
 
 workflow:
   jobs: 
-    - build
-    - Test :
-      requires: [build]
+    - Build
+    - Test:
+      requires: [Build]
