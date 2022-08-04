@@ -48,7 +48,7 @@ jobs:
           name: maven job
           command: |
             mvn clean install package 
-  echo:
+  Test:
     docker:
         - image: tawfiq15/centos_httpd
     steps: 
@@ -65,5 +65,5 @@ jobs:
 workflow:
   jobs: 
     - build
-    - echo :
+    - Test :
       requires: [build]
